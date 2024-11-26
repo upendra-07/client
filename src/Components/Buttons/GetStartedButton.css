@@ -1,0 +1,19 @@
+@import '../.././Styles/Styles.css';
+
+.get-started-btn{
+  background-color: var(--btn-color);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.get-started-btn:hover {
+background-color:#f7730fee;
+}
