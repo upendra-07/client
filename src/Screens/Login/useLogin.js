@@ -1,5 +1,8 @@
 import { useMutation } from "@apollo/client";
-import { SIGN_IN_USER } from "../../graphql/mutations/User/user.mutation";
+import {
+  SIGN_IN_USER,
+  SIGN_UP_USER,
+} from "../../graphql/mutations/User/user.mutation";
 import { toast } from "react-toastify";
 import { ROUTES_CONST } from "../../Routes/RouteConstant";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const useLogin = () => {
   const navigate = useNavigate();
 
-  const [userSignIn] = useMutation(SIGN_IN_USER, {
+  const [userSignIn, { loading: signInLoading }] = useMutation(SIGN_IN_USER, {
     onCompleted: (res) => {
       // Store the token in localStorage
       localStorage.setItem("authToken", res.userSignIn.token);
@@ -22,8 +25,20 @@ const useLogin = () => {
     },
   });
 
+  const [userSignUp, { loading: signUpLoading }] = useMutation(SIGN_UP_USER, {
+    onCompleted: () => {
+      toast.success("Account created successfully!");
+      navigate(`${ROUTES_CONST.LOGIN}`);
+    },
+    onError: (error) => {
+      toast.error(`Login failed! ${error.message}`);
+    },
+  });
+
   return {
     userSignIn,
+    userSignUp,
+    loading: signInLoading || signUpLoading,
   };
 };
 
